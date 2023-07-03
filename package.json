@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "ml-matrix": "^6.10.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.3",
+    "eslint": "^8.44.0",
+    "prettier": "^2.8.8",
+    "tsx": "^3.12.7",
+    "typescript": "^5.1.6"
+  }
+}

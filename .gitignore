@@ -1,0 +1,7 @@
+node_modules
+.vscode
+.eslintrc.yml
+unrelated
+lib
+lib-esm
+sampledata.js
