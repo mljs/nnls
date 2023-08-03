@@ -51,7 +51,7 @@ describe('NNLS tests', () => {
       [1, 0],
       [0, 1],
     ];
-    const y = [2, 1, 1];
+    const y = [-1, -1, -1];
     const solution = [0, 0];
     const result = nnls(X, y).resultVector;
     assertResult(result, solution);
