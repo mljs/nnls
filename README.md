@@ -22,9 +22,9 @@ import { nnls } from 'nnls';
 const { resultVector, dualVector, residualVector } = nnls(X, y);
 ```
 
-But it is limited to a single vector $y$, or as it is called in the literature, a single right hand side.
+Like other implementations (for example `scipy.optimize.nnls`) it is limited to a single vector $y$, or as it is called in the literature, a single right hand side.
 
-For a more faster version, especially if you need multiple right hand sides, you can take a look at [Fast-Combinatorial Non-Negative Least-Squares](https://github.com/mljs/fcnnls)
+For multiple right hand sides, you can take a look at [Fast-Combinatorial Non-Negative Least-Squares](https://github.com/mljs/fcnnls)
 
 ## Misc.
 
