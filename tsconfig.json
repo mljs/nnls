@@ -1,18 +1,13 @@
 {
   "compilerOptions": {
-    "skipLibCheck": true,
-    "target": "es2020",
-    "module": "commonjs",
+    "allowJs": true,
+    "checkJs": true,
     "esModuleInterop": true,
+    "moduleResolution": "node16",
+    "outDir": "lib",
     "sourceMap": true,
-    "outDir": "./lib"
+    "strict": true,
+    "target": "es2020"
   },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "*.test.ts"
-  ],
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["./src/**/*"]
 }
