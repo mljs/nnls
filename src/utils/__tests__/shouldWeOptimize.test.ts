@@ -1,4 +1,5 @@
 import { Matrix } from 'ml-matrix';
+
 import { shouldWeOptimize } from '../shouldWeOptimize';
 
 describe('shouldWeOptimize', () => {
