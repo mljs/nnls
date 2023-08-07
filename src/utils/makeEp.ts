@@ -1,11 +1,9 @@
 import { Matrix } from 'ml-matrix';
 
 /**
- * The optimizable columns from E (stored in P) are set to the columns of Ep
  * @param E - the data matrix
- * @param Ep - the matrix to be set
  * @param P - index of optimizable columns
- * @param nOfVariables
+ * @returns E(P), selection of positive columns from E
  */
 export function makeEp(E: Matrix, P: Uint8Array) {
   const Ep = Matrix.zeros(E.rows, E.columns);

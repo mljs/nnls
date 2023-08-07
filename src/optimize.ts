@@ -7,28 +7,27 @@ import { shouldWeOptimize, getAlpha, updateIndices, makeEp } from './utils';
  * 2. Writes them to Ep
  * 3. Solve Ep*z = f ( as standard least squares problem. )
  * Where columns of E selected by P indices are written in Ep. (data-like.)
+ * The remaining E(Z) will stay at 0.
+ * So we solve a problem equivalent to setting some xs (xz) to 0.
+ * And approximating the rest of xs (xp) with a least squares problem.
  * @param - Solver object.
- * @returns - the solution z.
+ * @returns - The solution.
  */
 export function optimize({ E, f, Z, P, x, w, indexOfMaxW }: Solver) {
-  let positive = P.filter((p) => p === 1).length;
-  let firstRun = true;
-  while (positive) {
+  const colsToSolve = P.filter((p) => p === 1).length;
+
+  for (let i = 0; i < colsToSolve; i++) {
     const Ep = makeEp(E, P); // E(P) => Ep; P is a column mask.
-    /*
-     * Solve the subproblem E_p x_p = f, with x_z set to zero.
-     */
+
+    // Solve E_p x = f, with E(Z) = 0.
     const z = solve(Ep, f, true);
 
     // max gradient is positive, check.
-    if (firstRun) {
-      if (z.get(indexOfMaxW, 0) <= 0) {
-        // similar to fcnnls
-        w.set(indexOfMaxW, 0, 0);
-        return x;
-      }
+    if (i === 0 && z.get(indexOfMaxW, 0) <= 0) {
+      // similar to fcnnls
+      w.set(indexOfMaxW, 0, 0);
+      return x;
     }
-    firstRun = false;
 
     if (shouldWeOptimize(Z, P, z)) return z; // back to step 2
 
@@ -41,31 +40,20 @@ export function optimize({ E, f, Z, P, x, w, indexOfMaxW }: Solver) {
       P,
       x,
     });
-    positive--;
   }
   return x;
 }
 
 export interface Solver {
-  /**
-   * data
-   */
+  /** data */
   E: Matrix;
-  /**
-   * response
-   */
+  /** response */
   f: Matrix;
-  /**
-   * working set of coefficients that are zero
-   */
+  /** working set of coefficients that are zero */
   Z: Uint8Array;
-  /**
-   * working set of coefficients that are positive
-   */
+  /** working set of coefficients that are positive */
   P: Uint8Array;
-  /**
-   * coefficients approximation
-   */
+  /** coefficients approximation */
   x: Matrix;
   /** Gradient */
   w: Matrix;
