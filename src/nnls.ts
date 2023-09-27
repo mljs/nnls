@@ -10,6 +10,8 @@ interface NnlsOptions {
    */
   maxIterations?: number;
   /**
+   * If false, you will be fitting `f(x)=C*X+b` instead of `f(x)=C*X`.
+   * If you did this step manually, just leave it as true.
    * @default true
    */
   interceptAtZero?: boolean;
@@ -38,10 +40,7 @@ export function nnls(
 
   // Add intercept
   if (options.interceptAtZero === false) {
-    const onesVector = Matrix.ones(E.rows, 1);
-    E = new Matrix(E.rows, E.columns + 1)
-      .setColumn(0, onesVector)
-      .setSubMatrix(E, 0, 1);
+    E = Matrix.ones(E.rows, E.columns + 1).setSubMatrix(E, 0, 1);
   }
 
   const { columns: nCoefficients /*rows: nEquations*/ } = E;
