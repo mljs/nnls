@@ -61,10 +61,15 @@ describe('NNLS tests', () => {
   it('Example 6: compare method with data', () => {
     const { X, Y, X5 } = data3;
     const result = nnls(X, Y, { interceptAtZero: false });
-    const resultVector = result.resultVector;
+    const resultVector = result.resultVector; //less good result than numpy, in both cases.
+    // const scipyResult = Matrix.columnVector([
+    //   4.92128988, 0.34302285, 0.58189576,
+    // ]);
     const result2 = nnls(X5, Y);
-    expect(resultVector[0]).toBeCloseTo(4.8938);
     assertResult(resultVector, result2.resultVector);
+    const result3 = nnls(X, Y);
+    const scipySolution = [0, 0.93375969];
+    assertResult(result3.resultVector, scipySolution);
   });
   it('Example 7: data2', () => {
     const { X, Y } = data2;

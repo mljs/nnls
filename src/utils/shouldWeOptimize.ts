@@ -3,19 +3,10 @@ import { Matrix } from 'ml-matrix';
 /**
  * If column went to positive stop optimizing it.
  */
-export function shouldWeOptimize({
-  Z,
-  P,
-  z,
-}: {
-  Z: Uint8Array;
-  P: Uint8Array;
-  z: Matrix;
-}) {
-  for (let i = 0; i < Z.length; i++) {
-    if (Z[i]) {
-      z.set(i, 0, 0);
-    } else if (P[i] && z.get(i, 0) <= 0) {
+export function shouldWeOptimize({ P, z }: { P: Uint8Array; z: Matrix }) {
+  for (let i = 0; i < P.length; i++) {
+    if (P[i] && z.get(i, 0) <= 0) {
+      //if some z is negative for P>0, stop optimizing.
       return false;
     }
   }

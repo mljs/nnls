@@ -20,15 +20,23 @@ export function solver({ E, f, Z, P, x, w, indexOfMaxW }: Solver) {
   for (let i = 0; i < colsToSolve; i++) {
     const Ep = makeEp(E, P); //cols=col of E or 0.
 
-    // Solve E_p x = f, with E(Z) = 0.
+    // 6A Solve E_p x = f, with E(Z) = 0.
     const z = solve(Ep, f, true);
+    // 6B Define z_i=0 for i in Z
+    for (let i = 0; i < Z.length; i++) {
+      if (Z[i]) {
+        z.set(i, 0, 0);
+      }
+    }
+    // step 7
+    if (shouldWeOptimize({ P, z })) return z; // back to step 2
 
+    // test whenever it comes from step 5 (first cycle)
     if (i === 0 && z.get(indexOfMaxW, 0) <= 0) {
+      //not sure if i===1 is necessary
       w.set(indexOfMaxW, 0, 0);
       return x;
     }
-
-    if (shouldWeOptimize({ Z, P, z })) return z; // back to step 2
 
     // if prev step was false
     const alpha = getAlpha({ x, z, P });

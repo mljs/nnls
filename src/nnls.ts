@@ -42,9 +42,8 @@ export function nnls(
   if (options.interceptAtZero === false) {
     E = Matrix.ones(E.rows, E.columns + 1).setSubMatrix(E, 0, 1);
   }
-
   const { columns: nCoefficients /*rows: nEquations*/ } = E;
-  let { maxIterations = 20 * nCoefficients } = options;
+  let { maxIterations = 3 * nCoefficients } = options;
 
   // step 1
   let x = Matrix.zeros(nCoefficients, 1); // unknowns
@@ -59,7 +58,6 @@ export function nnls(
   while (maxIterations--) {
     // step 2 - compute w
     const w = Etf.sub(EtE.mmul(x)); // g
-
     // step 3A
     if (!Z.some((z) => z !== 0)) {
       break;
