@@ -5,7 +5,9 @@
 [![Test coverage][codecov-image]][codecov-url]
 [![npm download][download-image]][download-url]
 
-This is a pure Typescript implementation of the Non-Negative Least-Squares (NNLS) algorithm, by Lawson and Hanson. It was mostly done for learning purposes, and will be improved over time.
+Non-Negative Least-Squares (NNLS) algorithm, by Lawson and Hanson. It was mostly done for learning purposes, and will be improved over time.
+
+You are welcome to report issues and contribute to this project.
 
 Find details in the [Misc.](#Misc.) section below.
 
@@ -26,26 +28,6 @@ Like other implementations (for example `scipy.optimize.nnls`) it is limited to 
 
 For multiple right hand sides, you can take a look at [Fast-Combinatorial Non-Negative Least-Squares](https://github.com/mljs/fcnnls)
 
-## Misc.
-
-<details>
-
-<summary>Expand</summary>
-
-In the book [Solving Least Squares Problems](https://books.google.co.uk/books?hl=en&lr=&id=AEwDbHp50FgC&oi=fnd&pg=PP1&ots=dITQ_G2Hcz&sig=-mmloZHdwjlqlEOFrP2azmfer6g#v=onepage&q&f=false) by Lawson & Hanson, 1995, they describe Non-Negative Least-Squares method for solving linear least squares problems with non-negativity constraints (Chapter 23, Section 3.)
-
-Both Least Squares and Non-Negative Least Squares (NNLS) are methods for solving linear regression problems. They become useful when the equation $\mathbf{A}x=b$ has no solution, because $b$ is not in the column space of a $C(A)$.
-
-We can approximate a solution, which is equivalent to finding a vector $x$ in the column space of $A$ that closest to $b$, where closest implies the minimum of the Euclidean norm $||Ax-b||$.
-
-The NNLS problem can be stated as:
-$$ \mathrm{argmin}{\_x} ||Ax - b|| \hspace{1em} \mathrm{s.t} \hspace{1em} x \geq 0$$
-
-where $A$ is a matrix of inputs, and $b$ is a vector of outputs.
-
-In linear regression by least squares the analytical solution is $$x = (A^TA)^{-1}A^Tb$$ But NNLS is here solved iteratively, and the solution is based on the active set method.
-
-</details>
 
 ## License
 
