@@ -3,27 +3,35 @@ import { Matrix } from 'ml-matrix';
 import { maxWiFromZ } from '..';
 
 describe('Test how the gradient is selected', () => {
-  it('All positive', () => {
-    const gradients = Matrix.ones(10, 1);
-    const Z = new Uint8Array(gradients.rows).fill(1);
-    const { stop, indexOfMaxW } = maxWiFromZ(Z, gradients);
-    expect(stop).toEqual(false);
-    expect(indexOfMaxW).toEqual(0);
+  it('All zeros', () => {
+    const Z = new Uint8Array(10);
+    const w = Matrix.zeros(10, 1);
+    const result = maxWiFromZ(Z, w);
+    expect(result.indexOfMaxW).toBe(0);
+    expect(result.maxW).toBe(0);
   });
-  it('Z is all zeros', () => {
-    const gradients = Matrix.ones(10, 1);
-    const Z = new Uint8Array(gradients.rows);
-    const { stop, indexOfMaxW } = maxWiFromZ(Z, gradients);
-    expect(stop).toEqual(true);
-    expect(indexOfMaxW).toEqual(0);
+  it('All Z-zeros test 2', () => {
+    const Z = new Uint8Array(10);
+    const w = Matrix.zeros(10, 1);
+    w.set(5, 0, 1);
+    const result = maxWiFromZ(Z, w);
+    expect(result.indexOfMaxW).toBe(0);
+    expect(result.maxW).toBe(0);
   });
-  it('all wi negative (or 0)', () => {
-    const gradients = Matrix.columnVector([
-      -10, -9, -8, -7, -6, -5, -4, -3, -2, -1,
-    ]);
-    const Z = new Uint8Array(gradients.rows).fill(1);
-    const { stop, indexOfMaxW } = maxWiFromZ(Z, gradients);
-    expect(stop).toEqual(true);
-    expect(indexOfMaxW).toEqual(gradients.rows - 1);
+  it('One non-zero', () => {
+    const Z = new Uint8Array(10);
+    Z[5] = 1;
+    const w = Matrix.zeros(10, 1);
+    w.set(5, 0, 1);
+    const result = maxWiFromZ(Z, w);
+    expect(result.indexOfMaxW).toBe(5);
+    expect(result.maxW).toBe(1);
+  });
+  it('Many non-zero', () => {
+    const Z = new Uint8Array(10).fill(1);
+    const w = Matrix.columnVector([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    const result = maxWiFromZ(Z, w);
+    expect(result.indexOfMaxW).toBe(9);
+    expect(result.maxW).toBe(10);
   });
 });

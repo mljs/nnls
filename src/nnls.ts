@@ -3,7 +3,7 @@ import { Matrix } from 'ml-matrix';
 import { optimize } from './optimize';
 import { checkInputDimensions, maxWiFromZ } from './utils';
 
-interface Options {
+interface NnlsOptions {
   /**
    * Maximum number of iterations.
    * @default 3 * nCoefficients
@@ -12,7 +12,7 @@ interface Options {
 }
 
 /**
- * Find `x` that minimizes the distance ||Ax - b|| with x >= 0.
+ * Find `x` that minimizes the distance `||Ax - b||` s.t `x >= 0`.
  * 1. Starts \vec{x} = 0,
  * 2. Compute the gradients,
  * 3. Solve for the positive gradients.
@@ -26,7 +26,7 @@ interface Options {
 export function nnls(
   X: number[][] | Matrix,
   y: number[] | Matrix,
-  options: Options = {},
+  options: NnlsOptions = {},
 ) {
   const { E, f } = checkInputDimensions(X, y); // E=data, f=response.
 
@@ -38,7 +38,7 @@ export function nnls(
   const Z = new Uint8Array(nCoefficients).fill(1); // 1s
   const P = new Uint8Array(nCoefficients); //0s
 
-  // precompute part of g = Et(f - E * x)
+  // pre-compute part of g = Et(f - E.x)
   const Et = E.transpose();
   const EtE = Et.mmul(E); //square matrix
   const Etf = Et.mmul(f); //column vector like f.
@@ -47,15 +47,18 @@ export function nnls(
     // step 2
     const w = Etf.sub(EtE.mmul(x)); // g
 
-    // step 3, 4
-    const { indexOfMaxW, stop } = maxWiFromZ(Z, w);
-    if (stop) {
+    // steps 3 and 4
+    if (!Z.some((z) => z !== 0)) {
       break;
-    } else {
-      // step 5
-      P[indexOfMaxW] = 1;
-      Z[indexOfMaxW] = 0;
     }
+    const { indexOfMaxW, maxW } = maxWiFromZ(Z, w);
+    if (maxW <= 0) {
+      break;
+    }
+
+    // step 5
+    P[indexOfMaxW] = 1;
+    Z[indexOfMaxW] = 0;
 
     x = optimize({
       E,
