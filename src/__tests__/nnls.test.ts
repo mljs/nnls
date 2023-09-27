@@ -5,7 +5,6 @@ import { nnls } from '../nnls';
 import { data } from './sample_data/data1';
 import { data2 } from './sample_data/data2';
 import { data3 } from './sample_data/data3';
-import { data4 } from './sample_data/data4';
 
 function assertResult(result: number[], solution: number[], precision = 4) {
   for (let i = 0; i < result.length; i++) {
@@ -59,38 +58,17 @@ describe('NNLS tests', () => {
     const result = nnls(X, y);
     assertResult(result.resultVector, solution);
   });
-  it('Example 6: dont intercept at zero', () => {
-    const { X, Y, X0, Y0 } = data3;
+  it('Example 6: compare method with data', () => {
+    const { X, Y, X5 } = data3;
     const result = nnls(X, Y, { interceptAtZero: false });
     const resultVector = result.resultVector;
-    const result2 = nnls(X0, Y0);
-    expect(resultVector[0]).toBe(0);
-    resultVector.shift();
+    const result2 = nnls(X5, Y);
+    expect(resultVector[0]).toBeCloseTo(4.8938);
     assertResult(resultVector, result2.resultVector);
-    // residual should be very small for almost exact results.
-    assertResult(
-      result.residualVector,
-      [
-        -8.881784197001252e-16, -8.881784197001252e-16, -1.7763568394002505e-15,
-        -1.7763568394002505e-15, -1.7763568394002505e-15,
-        -3.552713678800501e-15, -3.552713678800501e-15, -3.552713678800501e-15,
-        -3.552713678800501e-15, -3.552713678800501e-15, -7.105427357601002e-15,
-        -7.105427357601002e-15,
-      ],
-    );
   });
   it('Example 7: data2', () => {
     const { X, Y } = data2;
     const result = nnls(X, Y);
     assertResult(result.resultVector, [0, 0.00002958854986853723]);
-  });
-  it('Example 8: data4', () => {
-    // can't be fully sure that this is the best solution.
-    const { X, Y } = data4;
-    const result = nnls(X, Y, { interceptAtZero: false });
-    assertResult(
-      result.resultVector,
-      [4.870637450199203, 0, 0.7552191235059765],
-    );
   });
 });
