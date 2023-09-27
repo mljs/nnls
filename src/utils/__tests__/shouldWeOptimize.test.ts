@@ -7,7 +7,7 @@ describe('shouldWeOptimize', () => {
     const Z = new Uint8Array([0, 1, 0]);
     const P = new Uint8Array([1, 0, 1]);
     const z = Matrix.columnVector([1, 2, 3]);
-    const result = shouldWeOptimize(Z, P, z);
+    const result = shouldWeOptimize({ Z, P, z });
     expect(result).toBe(true);
   });
 
@@ -15,7 +15,7 @@ describe('shouldWeOptimize', () => {
     const Z = new Uint8Array([0, 1, 0]);
     const P = new Uint8Array([1, 0, 1]);
     const z = Matrix.columnVector([1, -2, 3]);
-    const result = shouldWeOptimize(Z, P, z);
+    const result = shouldWeOptimize({ Z, P, z });
     expect(result).toBe(true);
   });
 
@@ -23,6 +23,6 @@ describe('shouldWeOptimize', () => {
     const Z = new Uint8Array([0, 1, 0]);
     const P = new Uint8Array([1, 0, 1]);
     const z = Matrix.columnVector([-1, 2, 3]);
-    expect(shouldWeOptimize(Z, P, z)).toBe(false);
+    expect(shouldWeOptimize({ Z, P, z })).toBe(false);
   });
 });

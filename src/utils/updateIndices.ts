@@ -2,7 +2,7 @@ import type { Matrix } from 'ml-matrix';
 /**
  * Important step (11) where we move the 1s from P to Z if x_i = 0
  * It's the only mechanism that removes from P.
- * @param - Indices Arrays (P,Z) and Coefficient vector x {@link UpdateIndices}
+ * @param UpdateIndices object {@link UpdateIndices}
  */
 export function updateIndices({ Z, P, x }: UpdateIndices) {
   for (let i = 0; i < P.length; i++) {

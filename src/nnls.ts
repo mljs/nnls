@@ -1,6 +1,6 @@
 import { Matrix } from 'ml-matrix';
 
-import { optimize } from './optimize';
+import { solver } from './solver';
 import { checkInputDimensions, maxWiFromZ } from './utils';
 
 interface NnlsOptions {
@@ -9,6 +9,10 @@ interface NnlsOptions {
    * @default 3 * nCoefficients
    */
   maxIterations?: number;
+  /**
+   * @default true
+   */
+  interceptAtZero?: boolean;
 }
 
 /**
@@ -28,7 +32,17 @@ export function nnls(
   y: number[] | Matrix,
   options: NnlsOptions = {},
 ) {
-  const { E, f } = checkInputDimensions(X, y); // E=data, f=response.
+  const goodInput = checkInputDimensions(X, y); // E=data, f=response.
+  let E = goodInput.E;
+  const f = goodInput.f;
+
+  // Add intercept
+  if (options.interceptAtZero === false) {
+    const onesVector = Matrix.ones(E.rows, 1);
+    E = new Matrix(E.rows, E.columns + 1)
+      .setColumn(0, onesVector)
+      .setSubMatrix(E, 0, 1);
+  }
 
   const { columns: nCoefficients /*rows: nEquations*/ } = E;
   let { maxIterations = 20 * nCoefficients } = options;
@@ -43,24 +57,25 @@ export function nnls(
   const EtE = Et.mmul(E); //square matrix
   const Etf = Et.mmul(f); //column vector like f.
 
-  while (maxIterations) {
-    // step 2
+  while (maxIterations--) {
+    // step 2 - compute w
     const w = Etf.sub(EtE.mmul(x)); // g
 
-    // steps 3 and 4
+    // step 3A
     if (!Z.some((z) => z !== 0)) {
       break;
     }
+    // Step 3B and 4
     const { indexOfMaxW, maxW } = maxWiFromZ(Z, w);
     if (maxW <= 0) {
       break;
     }
 
-    // step 5
+    // step 5 - We are sure that maxW > 0
     P[indexOfMaxW] = 1;
     Z[indexOfMaxW] = 0;
 
-    x = optimize({
+    x = solver({
       E,
       f,
       Z,
@@ -69,7 +84,6 @@ export function nnls(
       w,
       indexOfMaxW,
     });
-    maxIterations--;
   }
   const dual = Etf.sub(EtE.mmul(x));
   return {
