@@ -7,7 +7,7 @@
 
 Non-Negative Least-Squares (NNLS) algorithm, by Lawson and Hanson. It was mostly done for learning purposes, and will be improved over time.
 
-Currently, it seems to match (scipy's results)[https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.nnls.html].
+Currently, it seems to match [scipy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.nnls.html), at least in some basic tests.
 
 You are welcome to report issues and contribute to this project.
 
