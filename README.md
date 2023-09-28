@@ -7,6 +7,8 @@
 
 Non-Negative Least-Squares (NNLS) algorithm, by Lawson and Hanson. It was mostly done for learning purposes, and will be improved over time.
 
+Currently, it seems to match (scipy's results)[https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.nnls.html].
+
 You are welcome to report issues and contribute to this project.
 
 ## Installation
@@ -23,11 +25,11 @@ const { resultVector } = nnls(X, y);
 
 The code returns also the `dualVector` and the `MSE`.
 
-You can pass `{ interceptAtZero:false }` if you want `f(0)=C`.
+You can pass `{ interceptAtZero:false }` if you want $f(0)=C$.
 
-Like other implementations (for example `scipy.optimize.nnls`) it is limited to a single vector $y$, or as it is called in the literature, a single right hand side.
+Like other implementations (for example `scipy.optimize.nnls`) it is limited to a single vector $y$, or as it is called in the literature, a single right-hand-side (RHS).
 
-For multiple right hand sides, you can take a look at [Fast-Combinatorial Non-Negative Least-Squares](https://github.com/mljs/fcnnls)
+For multiple RHS, you can take a look at [Fast-Combinatorial Non-Negative Least-Squares](https://github.com/mljs/fcnnls)
 
 ## License
 
