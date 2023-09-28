@@ -25,9 +25,10 @@ const { resultVector } = nnls(X, y);
 
 The code returns also the `dualVector` and the `MSE`.
 
-You can pass `{ interceptAtZero:false }` if you want $f(0)=C$.
-
 Like other implementations (for example `scipy.optimize.nnls`) it is limited to a single vector $y$, or as it is called in the literature, a single right-hand-side (RHS).
+
+As a minor addition to other implementations, you can pass `{ interceptAtZero:false }` then the result is consistent with $f(0)=C$.
+
 
 For multiple RHS, you can take a look at [Fast-Combinatorial Non-Negative Least-Squares](https://github.com/mljs/fcnnls)
 
