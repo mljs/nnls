@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/santimirandarp/nnls/compare/v1.0.1...v1.1.0) (2023-09-28)
+
+
+### Features
+
+* allow users to pass intercept not at zero. ([207028b](https://github.com/santimirandarp/nnls/commit/207028bb7b7c94eb0003805cb024f07b06e73b19))
+
 ## [1.0.1](https://github.com/santimirandarp/nnls/compare/v1.0.0...v1.0.1) (2023-08-07)
 
 
