@@ -6,9 +6,15 @@ import { data } from './sample_data/data1';
 import { data2 } from './sample_data/data2';
 import { data3 } from './sample_data/data3';
 
-function assertResult(result: number[], solution: number[], precision = 4) {
-  for (let i = 0; i < result.length; i++) {
-    expect(result[i]).toBeCloseTo(solution[i], precision);
+function assertResult(
+  result: number[] | Matrix,
+  solution: number[] | Matrix,
+  precision = 4,
+) {
+  result = Array.isArray(result) ? Matrix.columnVector(result) : result;
+  solution = Array.isArray(solution) ? Matrix.columnVector(solution) : solution;
+  for (let i = 0; i < result.rows; i++) {
+    expect(result.get(i, 0)).toBeCloseTo(solution.get(i, 0), precision);
   }
 }
 describe('NNLS tests', () => {

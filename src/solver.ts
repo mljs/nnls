@@ -33,7 +33,6 @@ export function solver({ E, f, Z, P, x, w, indexOfMaxW }: Solver) {
 
     // test whenever it comes from step 5 (first cycle)
     if (i === 0 && z.get(indexOfMaxW, 0) <= 0) {
-      //not sure if i===1 is necessary
       w.set(indexOfMaxW, 0, 0);
       return x;
     }

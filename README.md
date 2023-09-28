@@ -20,8 +20,9 @@ Find details in the [Misc.](#Misc.) section below.
 ```js
 import { nnls } from 'nnls';
 
-// you may need `resultVector`
-const { resultVector, dualVector, residualVector } = nnls(X, y);
+const { resultVector/*, dualVector, residualVector*/ } = nnls(X, y);
+// use `resultVector.to1DArray()` and so on... 
+//to get the result as a 1D array
 ```
 
 Like other implementations (for example `scipy.optimize.nnls`) it is limited to a single vector $y$, or as it is called in the literature, a single right hand side.

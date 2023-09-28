@@ -84,8 +84,8 @@ export function nnls(
   }
   const dual = Etf.sub(EtE.mmul(x));
   return {
-    resultVector: x.to1DArray(),
-    dualVector: dual.to1DArray(),
-    residualVector: E.mmul(x).sub(f).to1DArray(),
+    resultVector: x,
+    dualVector: dual,
+    residualVector: E.mmul(x).sub(f),
   };
 }
