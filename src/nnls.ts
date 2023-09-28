@@ -1,7 +1,7 @@
 import { Matrix } from 'ml-matrix';
 
 import { solver } from './solver';
-import { checkInputDimensions, maxWiFromZ } from './utils';
+import { getRootSquaredError, checkInputDimensions, maxWiFromZ } from './utils';
 
 interface NnlsOptions {
   /**
@@ -86,6 +86,6 @@ export function nnls(
   return {
     resultVector: x,
     dualVector: dual,
-    residualVector: E.mmul(x).sub(f),
+    MSE: getRootSquaredError(E, f, x)
   };
 }

@@ -47,5 +47,5 @@ const Y = [
   30 + 5,
 ];
 
-const X5 = X.map((x) => [1, ...x]);
-export const data3 = { X, X5, Y };
+const XOnes = X.map((x) => [1, ...x]);
+export const data3 = { X, XOnes, Y };

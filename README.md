@@ -18,9 +18,11 @@ You are welcome to report issues and contribute to this project.
 ```js
 import { nnls } from 'nnls';
 
-const { resultVector /*, dualVector, residualVector*/ } = nnls(X, y);
-// use `resultVector.to1DArray()`...
+const { resultVector } = nnls(X, y);
 ```
+
+The code returns also the `dualVector` and the `MSE`.
+
 You can pass `{ interceptAtZero:false }` if you want `f(0)=C`.
 
 Like other implementations (for example `scipy.optimize.nnls`) it is limited to a single vector $y$, or as it is called in the literature, a single right hand side.

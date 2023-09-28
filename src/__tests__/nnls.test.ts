@@ -63,19 +63,27 @@ describe('NNLS tests', () => {
     const solution = [0, 0];
     const result = nnls(X, y);
     assertResult(result.resultVector, solution);
+    expect(result.MSE).toBeCloseTo(1.73205, 4);
   });
   it('Example 6: compare method with data', () => {
-    const { X, Y, X5 } = data3;
-    const result = nnls(X, Y, { interceptAtZero: false });
-    const resultVector = result.resultVector; //less good result than numpy, in both cases.
-    // const scipyResult = Matrix.columnVector([
+    // X5 is the same as X, but with a column of 1s added to the left.
+    const { X, Y, XOnes } = data3;
+    const extraParameter = nnls(X, Y, { interceptAtZero: false });
+    const resultVector = extraParameter.resultVector; //less good result than numpy, in both cases.
+    assertResult(resultVector, nnls(XOnes, Y).resultVector);
+    // other software (like scipy) yields
+    // const scipyResult1 = Matrix.columnVector([
     //   4.92128988, 0.34302285, 0.58189576,
     // ]);
-    const result2 = nnls(X5, Y);
-    assertResult(resultVector, result2.resultVector);
-    const result3 = nnls(X, Y);
+    const scipyError1 = 0.5740809582615467;
+    //ours is 0.5956313955391651
+    expect(extraParameter.MSE).toBeGreaterThan(scipyError1);
+
+    const forceToZero = nnls(X, Y);
     const scipySolution = [0, 0.93375969];
-    assertResult(result3.resultVector, scipySolution);
+    const scipyError = 11.562826502844006;
+    expect(forceToZero.MSE).toBeCloseTo(scipyError, 4);
+    assertResult(forceToZero.resultVector, scipySolution);
   });
   it('Example 7: data2', () => {
     const { X, Y } = data2;
