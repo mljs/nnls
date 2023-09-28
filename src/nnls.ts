@@ -57,7 +57,8 @@ export function nnls(
 
   while (maxIterations--) {
     // step 2 - compute w
-    const w = Etf.sub(EtE.mmul(x)); // g
+    const EtfClone = Etf.clone();
+    const w = EtfClone.sub(EtE.mmul(x)); // g
     // step 3A
     if (!Z.some((z) => z !== 0)) {
       break;
@@ -86,6 +87,6 @@ export function nnls(
   return {
     resultVector: x,
     dualVector: dual,
-    MSE: getRootSquaredError(E, f, x)
+    MSE: getRootSquaredError(E, f, x),
   };
 }

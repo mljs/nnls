@@ -71,13 +71,13 @@ describe('NNLS tests', () => {
     const extraParameter = nnls(X, Y, { interceptAtZero: false });
     const resultVector = extraParameter.resultVector; //less good result than numpy, in both cases.
     assertResult(resultVector, nnls(XOnes, Y).resultVector);
-    // other software (like scipy) yields
-    // const scipyResult1 = Matrix.columnVector([
-    //   4.92128988, 0.34302285, 0.58189576,
-    // ]);
+    const scipyResult1 = Matrix.columnVector([
+      4.92128988, 0.34302285, 0.58189576,
+    ]);
+    assertResult(resultVector, scipyResult1);
     const scipyError1 = 0.5740809582615467;
     //ours is 0.5956313955391651
-    expect(extraParameter.MSE).toBeGreaterThan(scipyError1);
+    expect(extraParameter.MSE).toBeCloseTo(scipyError1, 8);
 
     const forceToZero = nnls(X, Y);
     const scipySolution = [0, 0.93375969];
