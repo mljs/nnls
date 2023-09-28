@@ -9,8 +9,6 @@ Non-Negative Least-Squares (NNLS) algorithm, by Lawson and Hanson. It was mostly
 
 You are welcome to report issues and contribute to this project.
 
-Find details in the [Misc.](#Misc.) section below.
-
 ## Installation
 
 `$ npm i nnls`
@@ -20,15 +18,14 @@ Find details in the [Misc.](#Misc.) section below.
 ```js
 import { nnls } from 'nnls';
 
-const { resultVector/*, dualVector, residualVector*/ } = nnls(X, y);
-// use `resultVector.to1DArray()` and so on... 
-//to get the result as a 1D array
+const { resultVector /*, dualVector, residualVector*/ } = nnls(X, y);
+// use `resultVector.to1DArray()`...
 ```
+You can pass `{ interceptAtZero:false }` if you want `f(0)=C`.
 
 Like other implementations (for example `scipy.optimize.nnls`) it is limited to a single vector $y$, or as it is called in the literature, a single right hand side.
 
 For multiple right hand sides, you can take a look at [Fast-Combinatorial Non-Negative Least-Squares](https://github.com/mljs/fcnnls)
-
 
 ## License
 
