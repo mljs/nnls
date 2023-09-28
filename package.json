@@ -37,12 +37,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/santimirandarp/nnls.git"
+    "url": "git+https://github.com/mljs/nnls.git"
   },
   "bugs": {
-    "url": "https://github.com/santimirandarp/nnls/issues"
+    "url": "https://github.com/mljs/nnls/issues"
   },
-  "homepage": "https://github.com/santimirandarp/nnls#readme",
+  "homepage": "https://github.com/mljs/nnls#readme",
   "devDependencies": {
     "@types/jest": "^29.5.3",
     "@vitest/coverage-v8": "^0.33.0",

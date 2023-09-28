@@ -38,9 +38,9 @@ For multiple RHS, you can take a look at [Fast-Combinatorial Non-Negative Least-
 
 [npm-image]: https://img.shields.io/npm/v/nnls.svg
 [npm-url]: https://www.npmjs.com/package/nnls
-[ci-image]: https://github.com/santimirandarp/nnls/workflows/Node.js%20CI/badge.svg?branch=main
-[ci-url]: https://github.com/santimirandarp/nnls/actions?query=workflow%3A%22Node.js+CI%22
-[codecov-image]: https://img.shields.io/codecov/c/github/santimirandarp/nnls.svg
-[codecov-url]: https://codecov.io/gh/santimirandarp/nnls
+[ci-image]: https://github.com/mljs/nnls/workflows/Node.js%20CI/badge.svg?branch=main
+[ci-url]: https://github.com/mljs/nnls/actions?query=workflow%3A%22Node.js+CI%22
+[codecov-image]: https://img.shields.io/codecov/c/github/mljs/nnls.svg
+[codecov-url]: https://codecov.io/gh/mljs/nnls
 [download-image]: https://img.shields.io/npm/dm/nnls.svg
 [download-url]: https://www.npmjs.com/package/nnls
