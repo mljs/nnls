@@ -3,7 +3,7 @@ import { Matrix } from 'ml-matrix';
 import { solver } from './solver';
 import { getRootSquaredError, checkInputDimensions, maxWiFromZ } from './utils';
 
-interface NnlsOptions {
+export interface NnlsOptions {
   /**
    * Maximum number of iterations.
    * @default 3 * nCoefficients
