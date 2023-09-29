@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/mljs/nnls/compare/v2.0.0...v2.0.1) (2023-09-28)
+
+
+### Bug Fixes
+
+* update the links ([12020cc](https://github.com/mljs/nnls/commit/12020ccbe7ecdfe18cece9623690f5d310d0014a))
+
 ## [2.0.0](https://github.com/mljs/nnls/compare/v1.1.0...v2.0.0) (2023-09-28)
 
 
