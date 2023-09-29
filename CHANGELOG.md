@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.2](https://github.com/mljs/nnls/compare/v2.0.1...v2.0.2) (2023-09-29)
+
+
+### Bug Fixes
+
+* export interface, add docs to gitignore ([d35a47c](https://github.com/mljs/nnls/commit/d35a47cb62a5635c11f481876c88fe0fef3a83f7))
+* update workflow and export interface ([#6](https://github.com/mljs/nnls/issues/6)) ([8a207fe](https://github.com/mljs/nnls/commit/8a207fee85702e3b8ea84e267f81e000542ce542))
+
+
+### Documentation
+
+* use mathjax ([8fec980](https://github.com/mljs/nnls/commit/8fec980e1e31f197420ec57d3e829aed5fb8ffda))
+
 ## [2.0.1](https://github.com/mljs/nnls/compare/v2.0.0...v2.0.1) (2023-09-28)
 
 
