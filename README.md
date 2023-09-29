@@ -29,8 +29,9 @@ Like other implementations (for example `scipy.optimize.nnls`) it is limited to 
 
 As a minor addition to other implementations, you can pass `{ interceptAtZero:false }` then the result is consistent with $f(0)=C$.
 
-
 For multiple RHS, you can take a look at [Fast-Combinatorial Non-Negative Least-Squares](https://github.com/mljs/fcnnls)
+
+## [Documentation](https://mljs.github.io/nnls/)
 
 ## License
 
