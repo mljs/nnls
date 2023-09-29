@@ -3,14 +3,14 @@ import { Matrix } from 'ml-matrix';
 import { solver } from './solver';
 import { getRootSquaredError, checkInputDimensions, maxWiFromZ } from './utils';
 
-interface NnlsOptions {
+export interface NnlsOptions {
   /**
    * Maximum number of iterations.
    * @default 3 * nCoefficients
    */
   maxIterations?: number;
   /**
-   * If false, you will be fitting `f(x)=C*X+b` instead of `f(x)=C*X`.
+   * If false, you will be fitting $f(x)=C*X+b$ instead of $f(x)=C*X$.
    * If you did this step manually, just leave it as true.
    * @default true
    */
@@ -18,12 +18,12 @@ interface NnlsOptions {
 }
 
 /**
- * Find `x` that minimizes the distance `||Ax - b||` s.t `x >= 0`.
- * 1. Starts \vec{x} = 0,
+ * Find $x$ that minimizes the distance $||Ax - b||$ s.t $x >= 0$.
+ * 1. Starts $\vec{x} = 0$,
  * 2. Compute the gradients,
  * 3. Solve for the positive gradients.
  * Nomenclature: "l" is a vector, "L" is a matrix.
- * "Lt" denotes L transpose.
+ * $L_t$ denotes L transpose.
  * @param X - input data
  * @param y - response data
  * @param options - options
