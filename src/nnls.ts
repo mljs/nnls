@@ -3,27 +3,28 @@ import { Matrix } from 'ml-matrix';
 import { solver } from './solver';
 import { getRootSquaredError, checkInputDimensions, maxWiFromZ } from './utils';
 
-export interface NnlsOptions {
+export interface NnlsOptions<T extends boolean | undefined> {
   /**
    * Maximum number of iterations.
    * @default 3 * nCoefficients
    */
   maxIterations?: number;
   /**
-   * If false, you will be fitting $f(x)=C*X+b$ instead of $f(x)=C*X$.
+   * If false, you will be fitting `f(x)=C*X+b` instead of `f(x)=C*X`.
    * If you did this step manually, just leave it as true.
    * @default true
    */
   interceptAtZero?: boolean;
+  /**
+   * Return information of the error at each iteration step
+   * from the main iteration loop.
+   * @default false
+   */
+  info?: T;
 }
 
 /**
- * Find $x$ that minimizes the distance $||Ax - b||$ s.t $x >= 0$.
- * 1. Starts $\vec{x} = 0$,
- * 2. Compute the gradients,
- * 3. Solve for the positive gradients.
- * Nomenclature: "l" is a vector, "L" is a matrix.
- * $L_t$ denotes L transpose.
+ * Find $x$ that minimizes the distance `||Ax - b|| s.t x >= 0`
  * @param X - input data
  * @param y - response data
  * @param options - options
@@ -32,11 +33,27 @@ export interface NnlsOptions {
 export function nnls(
   X: number[][] | Matrix,
   y: number[] | Matrix,
-  options: NnlsOptions = {},
+  options?: NnlsOptions<false | undefined>,
+): DataOnly;
+export function nnls(
+  X: number[][] | Matrix,
+  y: number[] | Matrix,
+  options?: NnlsOptions<true>,
+): DataAndInfo;
+export function nnls<T extends boolean | undefined>(
+  X: number[][] | Matrix,
+  y: number[] | Matrix,
+  options?: NnlsOptions<T>,
+): DataAndInfo | DataOnly;
+export function nnls<T extends boolean | undefined>(
+  X: number[][] | Matrix,
+  y: number[] | Matrix,
+  options: NnlsOptions<T> = {},
 ) {
   const goodInput = checkInputDimensions(X, y); // E=data, f=response.
   let E = goodInput.E;
   const f = goodInput.f;
+  const error: number[] = [];
 
   // Add intercept
   if (options.interceptAtZero === false) {
@@ -59,6 +76,7 @@ export function nnls(
     // step 2 - compute w
     const EtfClone = Etf.clone();
     const w = EtfClone.sub(EtE.mmul(x)); // g
+
     // step 3A
     if (!Z.some((z) => z !== 0)) {
       break;
@@ -82,11 +100,45 @@ export function nnls(
       w,
       indexOfMaxW,
     });
+    if (options.info) {
+      error.push(getRootSquaredError(E, f, x));
+    }
   }
   const dual = Etf.sub(EtE.mmul(x));
+  if (options.info) {
+    return {
+      resultVector: x,
+      dualVector: dual,
+      info: {
+        rse: error,
+        nIterations: error.length,
+      },
+    };
+  }
   return {
     resultVector: x,
     dualVector: dual,
-    MSE: getRootSquaredError(E, f, x),
   };
+}
+
+export interface Info {
+  /**
+   * Root Squared Error.
+   * This is a row vector, the RSE values for each column of Y.
+   */
+  rse: number[];
+  /**
+   * The number of times K was calculated.
+   */
+  nIterations: number;
+}
+export type NNLS = DataAndInfo | DataOnly;
+export interface DataAndInfo {
+  resultVector: Matrix;
+  dualVector: Matrix;
+  info: Info;
+}
+export interface DataOnly {
+  resultVector: Matrix;
+  dualVector: Matrix;
 }
