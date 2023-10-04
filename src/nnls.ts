@@ -104,6 +104,9 @@ export function nnls<T extends boolean | undefined>(
       error.push(getRootSquaredError(E, f, x));
     }
   }
+  if(maxIterations === 0){
+    throw new Error('Maximum number of iterations reached.');
+  }
   const dual = Etf.sub(EtE.mmul(x));
   if (options.info) {
     return {
