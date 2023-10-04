@@ -53,7 +53,6 @@ export function nnls<T extends boolean | undefined>(
   const goodInput = checkInputDimensions(X, y); // E=data, f=response.
   let E = goodInput.E;
   const f = goodInput.f;
-  const error: number[] = [];
 
   // Add intercept
   if (options.interceptAtZero === false) {
@@ -72,6 +71,8 @@ export function nnls<T extends boolean | undefined>(
   const EtE = Et.mmul(E); //square matrix
   const Etf = Et.mmul(f); //column vector like f.
 
+  // error before iterating.
+  const error: number[] = [getRootSquaredError(E, f, x)];
   while (maxIterations--) {
     // step 2 - compute w
     const EtfClone = Etf.clone();
@@ -104,7 +105,7 @@ export function nnls<T extends boolean | undefined>(
       error.push(getRootSquaredError(E, f, x));
     }
   }
-  if(maxIterations === 0){
+  if (maxIterations === 0) {
     throw new Error('Maximum number of iterations reached.');
   }
   const dual = Etf.sub(EtE.mmul(x));

@@ -63,7 +63,8 @@ describe('NNLS tests', () => {
     const solution = [0, 0];
     const result = nnls(X, y, { info: true });
     assertResult(result.resultVector, solution);
-    expect(result.info.rse).toBeCloseTo(1.73205, 4);
+    const rse = result.info.rse[result.info.rse.length - 1];
+    expect(rse).toBeCloseTo(1.73205, 4);
   });
   it('Example 6: compare method with data', () => {
     // X5 is the same as X, but with a column of 1s added to the left.
@@ -77,12 +78,17 @@ describe('NNLS tests', () => {
     assertResult(resultVector, scipyResult1);
     const scipyError1 = 0.5740809582615467;
     //ours is 0.5956313955391651
-    expect(extraParameter.info.rse).toBeCloseTo(scipyError1, 8);
+    expect(
+      extraParameter.info.rse[extraParameter.info.rse.length - 1],
+    ).toBeCloseTo(scipyError1, 8);
 
     const forceToZero = nnls(X, Y, { info: true });
     const scipySolution = [0, 0.93375969];
     const scipyError = 11.562826502844006;
-    expect(forceToZero.info.rse).toBeCloseTo(scipyError, 4);
+    expect(forceToZero.info.rse[forceToZero.info.rse.length - 1]).toBeCloseTo(
+      scipyError,
+      4,
+    );
     assertResult(forceToZero.resultVector, scipySolution);
   });
   it('Example 7: data2', () => {
