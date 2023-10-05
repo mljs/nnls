@@ -1,6 +1,6 @@
 {
   "name": "nnls",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "description": "Non-Negative Least-Squares",
   "main": "./lib/index.js",
   "module": "./lib-esm/index.js",

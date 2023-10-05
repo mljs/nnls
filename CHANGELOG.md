@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/mljs/nnls/compare/v2.0.2...v3.0.0) (2023-10-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* new output type, and error if max iterations is reached
+
+### Code Refactoring
+
+* new output type, and error if max iterations is reached ([4125773](https://github.com/mljs/nnls/commit/4125773c43b3ee373cfc840402210b9533ea6ddf))
+
 ## [2.0.2](https://github.com/mljs/nnls/compare/v2.0.1...v2.0.2) (2023-09-29)
 
 
