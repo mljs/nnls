@@ -11,7 +11,7 @@ function assertResult(
   solution: number[] | Matrix,
   precision = 4,
 ) {
-  const result = output.resultVector;
+  const result = output.x;
   solution = Array.isArray(solution) ? Matrix.columnVector(solution) : solution;
   for (let i = 0; i < result.rows; i++) {
     expect(result.get(i, 0)).toBeCloseTo(solution.get(i, 0), precision);
@@ -80,7 +80,7 @@ describe('NNLS tests', () => {
     // X5 is the same as X, but with a column of 1s added to the left.
     const { X, Y, XOnes } = data3;
     const extraParameter = nnls(X, Y, { interceptAtZero: false, info: true });
-    assertResult(extraParameter, nnls(XOnes, Y).resultVector);
+    assertResult(extraParameter, nnls(XOnes, Y).x);
     const scipyResult1 = Matrix.columnVector([
       4.92128988, 0.34302285, 0.58189576,
     ]);

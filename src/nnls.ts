@@ -113,17 +113,17 @@ export function nnls<T extends boolean | undefined>(
   const dual = Etf.sub(EtE.mmul(x));
   if (options.info) {
     return {
-      resultVector: x,
-      dualVector: dual,
+      x,
+      d: dual,
       info: {
         rse: error,
-        nIterations: error.length,
+        iterations: error.length,
       },
     };
   }
   return {
-    resultVector: x,
-    dualVector: dual,
+    x,
+    d: dual,
   };
 }
 
@@ -136,15 +136,27 @@ export interface Info {
   /**
    * The number of times K was calculated.
    */
-  nIterations: number;
+  iterations: number;
 }
 export type NNLSOutput = DataAndInfo | DataOnly;
 export interface DataAndInfo {
-  resultVector: Matrix;
-  dualVector: Matrix;
+  /**
+   * Solution vector.
+   */
+  x: Matrix;
+  /**
+   * Dual vector.
+   */
+  d: Matrix;
   info: Info;
 }
 export interface DataOnly {
-  resultVector: Matrix;
-  dualVector: Matrix;
+  /**
+   * Solution vector.
+   */
+  x: Matrix;
+  /**
+   * Dual vector.
+   */
+  d: Matrix;
 }
