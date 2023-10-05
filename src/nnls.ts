@@ -44,7 +44,7 @@ export function nnls<T extends boolean | undefined>(
   X: number[][] | Matrix,
   y: number[] | Matrix,
   options?: NnlsOptions<T>,
-): DataAndInfo | DataOnly;
+): NNLSOutput;
 export function nnls<T extends boolean | undefined>(
   X: number[][] | Matrix,
   y: number[] | Matrix,
@@ -105,9 +105,11 @@ export function nnls<T extends boolean | undefined>(
       error.push(getRootSquaredError(E, f, x));
     }
   }
-  if (maxIterations === 0) {
+
+  if (maxIterations <= 0) {
     throw new Error('Maximum number of iterations reached.');
   }
+
   const dual = Etf.sub(EtE.mmul(x));
   if (options.info) {
     return {
@@ -136,7 +138,7 @@ export interface Info {
    */
   nIterations: number;
 }
-export type NNLS = DataAndInfo | DataOnly;
+export type NNLSOutput = DataAndInfo | DataOnly;
 export interface DataAndInfo {
   resultVector: Matrix;
   dualVector: Matrix;
