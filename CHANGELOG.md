@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/mljs/nnls/compare/v3.0.0...v3.0.1) (2023-10-06)
+
+
+### Bug Fixes
+
+* single letter output and rephrase readme ([#10](https://github.com/mljs/nnls/issues/10)) ([37bfa70](https://github.com/mljs/nnls/commit/37bfa704c1544c8d96524e4cbe69e281b8d5b8a5))
+
 ## [3.0.0](https://github.com/mljs/nnls/compare/v2.0.2...v3.0.0) (2023-10-05)
 
 
