@@ -7,30 +7,6 @@ import { data2 } from './sample_data/data2';
 import { data3 } from './sample_data/data3';
 import { assertResult, testLastErrorValue } from './test-utils';
 
-<<<<<<< Updated upstream
-function assertResult(
-  output: NNLSOutput,
-  solution: number[] | Matrix,
-  precision = 4,
-) {
-  const result = output.x;
-  solution = Array.isArray(solution) ? Matrix.columnVector(solution) : solution;
-  for (let i = 0; i < result.rows; i++) {
-    expect(result.get(i, 0)).toBeCloseTo(solution.get(i, 0), precision);
-  }
-}
-function testLastErrorValue(
-  output: DataAndInfo,
-  expected: number,
-  precision = 4,
-) {
-  expect(output.info.rse[output.info.rse.length - 1]).toBeCloseTo(
-    expected,
-    precision,
-  );
-}
-=======
->>>>>>> Stashed changes
 describe('NNLS tests', () => {
   it('Example1', () => {
     const result = nnls(data.mC, data.bf);
