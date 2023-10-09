@@ -9,6 +9,7 @@ export function updateIndices({ Z, P, x }: UpdateIndices) {
     // if gradient is positive and x=0 move it to Z.
     if (P[i] && x.get(i, 0) <= 0) {
       // see paper further discussion, it's `<=0` not `===0`
+      x.set(i, 0, 0);
       Z[i] = 1;
       P[i] = 0;
     }

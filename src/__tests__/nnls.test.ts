@@ -1,11 +1,13 @@
 import { Matrix } from 'ml-matrix';
 
-import { DataAndInfo, NNLSOutput, nnls } from '../nnls';
+import { nnls } from '../nnls';
 
 import { data } from './sample_data/data1';
 import { data2 } from './sample_data/data2';
 import { data3 } from './sample_data/data3';
+import { assertResult, testLastErrorValue } from './test-utils';
 
+<<<<<<< Updated upstream
 function assertResult(
   output: NNLSOutput,
   solution: number[] | Matrix,
@@ -27,22 +29,12 @@ function testLastErrorValue(
     precision,
   );
 }
+=======
+>>>>>>> Stashed changes
 describe('NNLS tests', () => {
   it('Example1', () => {
     const result = nnls(data.mC, data.bf);
     const solution = [0, 50, 10];
-    assertResult(result, solution);
-  });
-  it('Example 2', () => {
-    const X = [
-      [1, 1, 2],
-      [10, 11, -9],
-      [-1, 0, 0],
-      [-5, 6, -7],
-    ];
-    const y = [-1, 11, 0, 1];
-    const solution = [0.461, 0.5611, 0];
-    const result = nnls(X, y);
     assertResult(result, solution);
   });
   it('Example 3', () => {

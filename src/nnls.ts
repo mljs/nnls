@@ -84,7 +84,8 @@ export function nnls<T extends boolean | undefined>(
     }
     // Step 3B and 4
     const { indexOfMaxW, maxW } = maxWiFromZ(Z, w);
-    if (maxW <= 0) {
+    if (maxW <= 1e-10) {
+      // workaround for w very close to 0
       break;
     }
 
@@ -93,14 +94,15 @@ export function nnls<T extends boolean | undefined>(
     Z[indexOfMaxW] = 0;
 
     x = solver({
-      E,
-      f,
       Z,
       P,
       x,
       w,
       indexOfMaxW,
+      EtE,
+      Etf,
     });
+
     if (options.info) {
       error.push(getRootSquaredError(E, f, x));
     }
