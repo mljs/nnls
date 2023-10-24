@@ -84,7 +84,7 @@ export function nnls<T extends boolean | undefined>(
     }
     // Step 3B and 4
     const { indexOfMaxW, maxW } = maxWiFromZ(Z, w);
-    if (maxW <= 1e-10) {
+    if (maxW <= 0) {
       // workaround for w very close to 0
       break;
     }
@@ -99,8 +99,8 @@ export function nnls<T extends boolean | undefined>(
       x,
       w,
       indexOfMaxW,
-      EtE,
-      Etf,
+      E,
+      f,
     });
 
     if (options.info) {

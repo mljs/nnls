@@ -1,9 +1,4 @@
-import {
-  Matrix,
-  LuDecomposition,
-  CholeskyDecomposition,
-  solve,
-} from 'ml-matrix';
+import { Matrix, QrDecomposition, SingularValueDecomposition } from 'ml-matrix';
 
 import {
   shouldWeOptimize,
@@ -17,28 +12,23 @@ import {
  * @param Solver object.
  * @returns The solution.
  */
-export function solver({ Z, P, x, w, indexOfMaxW, EtE, Etf }: Solver) {
+export function solver({ Z, P, x, w, indexOfMaxW, E, f }: Solver) {
   // Note that for P=zeros the algorithm skips loop
   const colsToSolve = P.filter((p) => p === 1).length;
-  const z: Matrix = Matrix.zeros(EtE.columns, 1);
+  const z: Matrix = Matrix.zeros(E.columns, 1);
   let reducedZ: Matrix;
   for (let i = 0; i < colsToSolve; i++) {
     const indices = maskToIndices(P);
-    const EtEToSolve = EtE.selection(indices, indices);
-    const EtfToSolve = Etf.subMatrixRow(indices);
-    const solveCho = new CholeskyDecomposition(EtEToSolve);
-    let solveLu: LuDecomposition;
 
-    if (solveCho.isPositiveDefinite()) {
-      reducedZ = solveCho.solve(Matrix.eye(indices.length)).mmul(EtfToSolve);
+    const EtoSolve = E.subMatrixColumn(indices);
+
+    const solveQR = new QrDecomposition(EtoSolve);
+    if (solveQR.isFullRank()) {
+      reducedZ = solveQR.solve(f);
     } else {
-      solveLu = new LuDecomposition(EtEToSolve);
-      if (!solveLu.isSingular()) {
-        reducedZ = solveLu.solve(Matrix.eye(indices.length)).mmul(EtfToSolve);
-      } else {
-        reducedZ = solve(EtEToSolve, EtfToSolve, true);
-      }
+      reducedZ = new SingularValueDecomposition(EtoSolve).solve(f);
     }
+
     // 6B Define z_i=0 for i in Z
     let pIndex = 0;
     for (let i = 0; i < Z.length; i++) {
@@ -83,6 +73,6 @@ export interface Solver {
   /** Gradient */
   w: Matrix;
   indexOfMaxW: number;
-  EtE: Matrix;
-  Etf: Matrix;
+  E: Matrix;
+  f: Matrix;
 }

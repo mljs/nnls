@@ -121,3 +121,4 @@ lib
 lib-esm
 .vscode
 docs
+*.cpuprofile
