@@ -1,4 +1,5 @@
 import { Matrix } from 'ml-matrix';
+import { expect, describe, it } from 'vitest';
 
 import { nnls } from '../nnls';
 
@@ -104,5 +105,29 @@ describe('NNLS tests', () => {
     const result = nnls(X, y, { info: true });
     assertResult(result, solution);
     testLastErrorValue(result, 4, 8);
+  });
+
+  it('non-singular square X, Y 3x1', () => {
+    const X = new Matrix([
+      [0, 1, 1],
+      [1, 0, 1],
+      [1, 1, 0],
+    ]);
+    const Y = [-1, 2, -3];
+    const solution = new Matrix([[0], [0], [0.5]]);
+    const result = nnls(X, Y);
+    assertResult(result, solution);
+  });
+
+  it('singular square X rank 2, Y 3x1', () => {
+    const X = new Matrix([
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9],
+    ]);
+    const Y = [-1, 0, 10];
+    const solution = new Matrix([[1.0455], [0], [0]]);
+    const result = nnls(X, Y);
+    assertResult(result, solution);
   });
 });

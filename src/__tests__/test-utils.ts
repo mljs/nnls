@@ -1,4 +1,5 @@
 import { Matrix } from 'ml-matrix';
+import { expect } from 'vitest';
 
 import { DataAndInfo, NNLSOutput } from '../nnls';
 

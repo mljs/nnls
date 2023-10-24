@@ -1,4 +1,5 @@
 import { Matrix } from 'ml-matrix';
+import { expect, describe, it } from 'vitest';
 
 import { shouldWeOptimize } from '../shouldWeOptimize';
 

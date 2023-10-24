@@ -1,4 +1,5 @@
 import { Matrix } from 'ml-matrix';
+import { expect, describe, test } from 'vitest';
 
 import { checkInputDimensions } from '../checkInputDimensions';
 

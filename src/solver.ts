@@ -23,11 +23,9 @@ export function solver({ Z, P, x, w, indexOfMaxW, E, f }: Solver) {
     const EtoSolve = E.subMatrixColumn(indices);
 
     const solveQR = new QrDecomposition(EtoSolve);
-    if (solveQR.isFullRank()) {
-      reducedZ = solveQR.solve(f);
-    } else {
-      reducedZ = new SingularValueDecomposition(EtoSolve).solve(f);
-    }
+    reducedZ = solveQR.isFullRank()
+      ? (reducedZ = solveQR.solve(f))
+      : new SingularValueDecomposition(EtoSolve).solve(f);
 
     // 6B Define z_i=0 for i in Z
     let pIndex = 0;
